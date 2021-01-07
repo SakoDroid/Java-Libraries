@@ -220,7 +220,7 @@ public class JSONBuilder {
 
     //Converts a JSONDocument to string (to be written in JSON file).
     private String parseJSONDocument(JSONDocument json){
-
+        return "not ready yet";
     }
 
     //Returns the type of a token is JSON.
