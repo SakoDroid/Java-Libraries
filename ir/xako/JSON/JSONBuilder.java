@@ -81,7 +81,7 @@ public class JSONBuilder {
      */
     public void write(JSONDocument doc,File fl){
         try(FileWriter fw  = new FileWriter(fl)){
-            fw.write(this.parseJSONDocument(doc));
+            fw.write(doc.toString());
             fw.flush();
         }catch(Exception ex){
             ex.printStackTrace();
@@ -97,7 +97,7 @@ public class JSONBuilder {
      */
     public void write(JSONDocument doc, OutputStream os){
         try{
-            os.write(this.parseJSONDocument(doc).getBytes());
+            os.write(doc.toString().getBytes());
             os.flush();
         }catch (Exception ex){
             ex.printStackTrace();
@@ -260,11 +260,6 @@ public class JSONBuilder {
             temp.put(keyObj,valueObj);
         }
         return temp;
-    }
-
-    //Converts a JSONDocument to string (to be written in JSON file).
-    private String parseJSONDocument(JSONDocument json){
-        return "not ready yet";
     }
 
     //Returns the type of a token is JSON.
