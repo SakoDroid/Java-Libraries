@@ -6,7 +6,22 @@ import java.util.HashMap;
 
 public class JSONBuilder {
 
+    private JSONBuilder (){}
 
+    /**
+     * Static method for creating a new JSONBuilder object.
+     *
+     * @return A new JSONBuilder object;
+     */
+    public static JSONBuilder newInstance(){
+        return new JSONBuilder();
+    }
+    /**
+     * Parses the data in a string into JSONDocument in java.
+     *
+     * @param data An string that contains JSON data.
+     * @return JSONDocument that will contain the data in the String given to method.
+     */
     public JSONDocument parse (String data){
         JSONDocument temp = null;
         if (data != null && !data.isEmpty()){
@@ -15,6 +30,12 @@ public class JSONBuilder {
         return temp;
     }
 
+    /**
+     * Parses a JSON file into JSONDocument in java.
+     *
+     * @param fl File that contains JSON String.
+     * @return JSONDocument that will contain the data in the File fl.
+     */
     public JSONDocument parse (File fl){
         JSONDocument temp = null;
         String data = "";
@@ -30,6 +51,12 @@ public class JSONBuilder {
         return temp;
     }
 
+    /**
+     * Parses the data in a InputStream into JSONDocument in java.
+     *
+     * @param is InputStream that contains JSON String.
+     * @return JSONDocument that will contain the data in the InputStream is.
+     */
     public JSONDocument parse (InputStream is){
         JSONDocument temp = null;
         String data = "";
@@ -45,6 +72,39 @@ public class JSONBuilder {
         return temp;
     }
 
+    /**
+     * This method will convert the JSONDocument to string and write it
+     * to a File or OutputStream.
+     *
+     * @param doc JSONDocument that is going to be written in the OutputStream.
+     * @param fl  This is the OutputStream in which JSONDocument will be written.
+     */
+    public void write(JSONDocument doc,File fl){
+        try(FileWriter fw  = new FileWriter(fl)){
+            fw.write(this.parseJSONDocument(doc));
+            fw.flush();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * This method will convert the JSONDocument to string and write it
+     * to a File or OutputStream.
+     *
+     * @param doc JSONDocument that is going to be written in the OutputStream.
+     * @param os  This is the OutputStream in which JSONDocument will be written.
+     */
+    public void write(JSONDocument doc, OutputStream os){
+        try{
+            os.write(this.parseJSONDocument(doc).getBytes());
+            os.flush();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    //This method turns a String into JSONDocument.
     private JSONDocument parseString(String data){
         JSONDocument temp = null;
         int pointer = 0;
@@ -67,6 +127,7 @@ public class JSONBuilder {
         return temp;
     }
 
+    //This method is used for parsing a JSON Array into ArrayList.
     private ArrayList parseList(String localData){
         int localPointer = 0;
         ArrayList temp = new ArrayList();
@@ -121,6 +182,7 @@ public class JSONBuilder {
         return temp;
     }
 
+    //This method is used for converting a JSON Object into HashMap.
     private HashMap parseMap(String localData){
         int localPointer = 0;
         HashMap temp = new HashMap();
@@ -198,24 +260,6 @@ public class JSONBuilder {
             temp.put(keyObj,valueObj);
         }
         return temp;
-    }
-
-    public void write(JSONDocument doc,File fl){
-        try(FileWriter fw  = new FileWriter(fl)){
-            fw.write(this.parseJSONDocument(doc));
-            fw.flush();
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-    }
-
-    public void write(JSONDocument doc, OutputStream os){
-        try{
-            os.write(this.parseJSONDocument(doc).getBytes());
-            os.flush();
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
     }
 
     //Converts a JSONDocument to string (to be written in JSON file).
