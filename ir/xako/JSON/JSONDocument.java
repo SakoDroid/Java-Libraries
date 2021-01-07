@@ -2,6 +2,7 @@ package ir.xako.JSON;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class JSONDocument {
 
@@ -40,6 +41,59 @@ public class JSONDocument {
             return this.content1;
         else
             return this.content2;
+    }
+
+    @Override
+    public String toString(){
+        return new ToString().getString();
+    }
+
+    private class ToString{
+
+        public String getString(){
+            if (content1 != null)
+                return parseList(content1);
+            else
+                return parseMap(content2);
+        }
+
+        //Parses a List into String.
+        private String parseList(List list){
+            StringBuilder sb = new StringBuilder();
+            sb.append("[\n");
+            for (Object obj : list){
+                sb.append(this.objectToString(obj))
+                .append(",\n");
+            }
+            return sb.substring(0,sb.length()-2) + "\n]";
+        }
+
+        //Parses a Map into String.
+        private String parseMap(Map map){
+            StringBuilder sb = new StringBuilder();
+            sb.append("{\n");
+            for (Object key : map.keySet()){
+                sb.append(this.objectToString(key))
+                .append(" : ")
+                .append(this.objectToString(map.get(key)))
+                .append(",\n");
+            }
+            return sb.substring(0,sb.length()-2) + "\n}";
+        }
+
+        //Evaluates an object and turns it into String.
+        private String objectToString(Object obj){
+            StringBuilder sb = new StringBuilder();
+            if (obj instanceof String)
+                sb.append("\"").append(obj).append("\"");
+            else if (obj instanceof Map)
+                sb.append(this.parseMap((Map) obj));
+            else if (obj instanceof List)
+                sb.append(this.parseList((List) obj));
+            else
+                sb.append(obj);
+            return sb.toString();
+        }
     }
 
 }
