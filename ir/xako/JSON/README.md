@@ -6,7 +6,7 @@ Sako
 
 Documentation : 
 ------------
-In this library we have to classes :
+In this library we have two classes :
 1. JSONBuilder : </br> This is the class that is used for parsing a JSON file into a JSONDocument and a JSONDocument into a JSON file.</br></br>
 2. JSONDocument : </br>This class (as you can tell by the name) is the JSONDocument which is
 created by the JSONBuilder class.
