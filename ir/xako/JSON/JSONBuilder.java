@@ -110,6 +110,9 @@ public class JSONBuilder {
         Pattern ptn = Pattern.compile("//.*");
         Matcher mc = ptn.matcher(data);
         while(mc.find())data = data.replace(mc.group(),"");
+        ptn = Pattern.compile("/\\*[\\s\\S]*\\*/");
+        mc = ptn.matcher(data);
+        while(mc.find())data = data.replace(mc.group(),"");
         return data.trim();
     }
 
