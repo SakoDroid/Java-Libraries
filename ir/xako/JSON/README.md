@@ -13,8 +13,9 @@ created by the JSONBuilder class.
    
 Note :
 ------------
-JSONDocument's toString method has been overridden and returns the JSON format of the document.</br>
-Also every method has Java doc, so i won't write every method documentation.
+1. JSONDocument's toString method has been overridden and returns the JSON format of the document.</br></br>
+2. Every method has Java doc, so i won't write every method documentation.</br></br>
+3. This library supports commenting in json files. Anything after "//" will be ignored until new line character.
 
 Examples :
 ------------

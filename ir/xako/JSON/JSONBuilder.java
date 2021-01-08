@@ -3,6 +3,7 @@ package ir.xako.JSON;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.*;
 
 public class JSONBuilder {
 
@@ -25,7 +26,7 @@ public class JSONBuilder {
     public JSONDocument parse (String data){
         JSONDocument temp = null;
         if (data != null && !data.isEmpty()){
-            temp = this.parseString(data);
+            temp = this.parseString(this.cleanString(data));
         }else throw new IllegalArgumentException("data cannot be null or empty");
         return temp;
     }
@@ -43,7 +44,7 @@ public class JSONBuilder {
             try (FileReader fr = new FileReader(fl)){
                 int c;
                 while((c = fr.read()) != -1) data += (char)c;
-                temp = this.parseString(data);
+                temp = this.parseString(this.cleanString(data));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -64,7 +65,7 @@ public class JSONBuilder {
             try{
                 int c;
                 while((c = is.read()) != -1) data += (char)c;
-                temp = this.parseString(data);
+                temp = this.parseString(this.cleanString(data));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -102,6 +103,14 @@ public class JSONBuilder {
         }catch (Exception ex){
             ex.printStackTrace();
         }
+    }
+
+    //Cleans the data and erases comments.
+    private String cleanString(String data){
+        Pattern ptn = Pattern.compile("//.*");
+        Matcher mc = ptn.matcher(data);
+        while(mc.find())data = data.replace(mc.group(),"");
+        return data.trim();
     }
 
     //This method turns a String into JSONDocument.
