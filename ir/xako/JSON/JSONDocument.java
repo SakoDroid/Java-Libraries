@@ -95,8 +95,11 @@ public class JSONDocument {
                 sb.append(this.parseMap((Map) obj));
             else if (obj instanceof List)
                 sb.append(this.parseList((List) obj));
-            else
+            else if (obj instanceof Integer || obj instanceof Byte || obj instanceof Short || obj instanceof Long
+            || obj instanceof Float || obj instanceof Double)
                 sb.append(obj);
+            else
+                sb.append("\"").append(obj).append("\"");
             return sb.toString();
         }
     }
